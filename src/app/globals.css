@@ -1,0 +1,91 @@
+@import "tailwindcss";
+
+@plugin "tailwindcss-animate";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+
+  --color-canvas: var(--canvas);
+  --color-surface: var(--surface);
+  --color-surface-raised: var(--surface-raised);
+  --color-ink-primary: var(--ink-primary);
+  --color-ink-secondary: var(--ink-secondary);
+  --color-ink-tertiary: var(--ink-tertiary);
+  --color-border: var(--border);
+  --color-border-subtle: var(--border-subtle);
+  
+  --color-accent: var(--accent);
+  --color-danger: var(--danger);
+  --color-warning: var(--warning);
+  --color-info: var(--info);
+
+  /* Shadcn mappings */
+  --color-background: var(--canvas);
+  --color-foreground: var(--ink-primary);
+  
+  --color-card: var(--surface);
+  --color-card-foreground: var(--ink-primary);
+  
+  --color-popover: var(--surface);
+  --color-popover-foreground: var(--ink-primary);
+  
+  --color-primary: var(--accent);
+  --color-primary-foreground: #FFFFFF;
+  
+  --color-secondary: var(--surface-raised);
+  --color-secondary-foreground: var(--ink-primary);
+  
+  --color-muted: var(--surface-raised);
+  --color-muted-foreground: var(--ink-secondary);
+  
+  --color-destructive: var(--danger);
+  --color-destructive-foreground: #FFFFFF;
+
+  --color-ring: var(--accent);
+
+  --radius-lg: var(--radius);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-sm: calc(var(--radius) - 4px);
+}
+
+:root {
+  /* Core variables */
+  --canvas: #FAFAFA;
+  --surface: #FFFFFF;
+  --surface-raised: #F5F5F5;
+  --ink-primary: #18181B;
+  --ink-secondary: #71717A;
+  --ink-tertiary: #A1A1AA;
+  --border: #E4E4E7;
+  --border-subtle: #F4F4F5;
+  
+  --accent: #10B981;
+  --danger: #EF4444;
+  --warning: #F59E0B;
+  --info: #3B82F6;
+
+  --radius: 0.5rem; /* 8px for rounded-lg */
+}
+
+.dark {
+  --canvas: #09090B;
+  --surface: #18181B;
+  --surface-raised: #27272A;
+  --ink-primary: #FAFAFA;
+  --ink-secondary: #A1A1AA;
+  --ink-tertiary: #52525B;
+  --border: #27272A;
+  --border-subtle: #1C1C1E;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-canvas text-ink-primary;
+  }
+}
