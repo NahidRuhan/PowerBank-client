@@ -107,7 +107,7 @@ export default function LoginPage() {
         type="button"
         disabled={isSubmitting || loginMutation.isPending}
         onClick={() => {
-          router.push(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api/v1'}/auth/google`);
+          window.location.href = `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api/v1'}/auth/google`;
         }}
       >
         <svg className="mr-2 h-4 w-4" viewBox="0 0 24 24">

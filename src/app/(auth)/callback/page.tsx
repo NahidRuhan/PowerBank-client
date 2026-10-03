@@ -12,19 +12,27 @@ export default function CallbackPage() {
 
   useEffect(() => {
     const token = searchParams.get('token');
+    const refreshToken = searchParams.get('refreshToken');
     const userStr = searchParams.get('user');
 
     if (token && userStr) {
       try {
         const user = JSON.parse(decodeURIComponent(userStr)) as User;
         
-        // This is slightly tricky, we need to ensure the httpOnly cookie is set.
-        // Usually, the backend sets the httpOnly cookie when redirecting to callback.
-        // If our Next.js API handles OAuth, it sets the cookie and redirects here.
-        // Assuming the tokens are set, we just need to populate Zustand and redirect.
-        
-        setAuth(token, user);
-        router.push('/dashboard');
+        const completeLogin = () => {
+          setAuth(token, user);
+          router.push('/dashboard');
+        };
+
+        if (refreshToken) {
+          fetch('/api/auth/set-cookie', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ refreshToken }),
+          }).then(completeLogin).catch(completeLogin);
+        } else {
+          completeLogin();
+        }
       } catch (err) {
         console.error('Failed to parse user data from callback URL', err);
         router.push('/login?error=OAuthFailed');
