@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { loginSchema, type LoginInput } from '@/lib/validations/auth';
@@ -10,10 +10,14 @@ import { useLogin } from '@/lib/api/hooks/use-auth';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Warning } from '@phosphor-icons/react';
 
 export default function LoginPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const loginMutation = useLogin();
+  
+  const errorMessage = searchParams.get('error');
 
   const {
     register,
@@ -43,6 +47,13 @@ export default function LoginPage() {
           Enter your email to sign in to your account
         </p>
       </div>
+
+      {errorMessage && (
+        <div className="rounded-md bg-danger-muted p-3 text-sm text-danger flex items-start gap-2">
+          <Warning className="h-5 w-5 shrink-0" />
+          <p>{errorMessage}</p>
+        </div>
+      )}
 
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
         <div className="flex flex-col gap-1.5">
@@ -107,6 +118,7 @@ export default function LoginPage() {
         type="button"
         disabled={isSubmitting || loginMutation.isPending}
         onClick={() => {
+          // eslint-disable-next-line @next/next/no-location-assign-relative-destination
           window.location.href = `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api/v1'}/auth/google`;
         }}
       >

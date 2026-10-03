@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import Image from 'next/image';
 import { useAuthStore } from '@/stores/auth-store';
 import { useProfile, useUpdateProfile, useChangePassword } from '@/lib/api/hooks/use-users';
 import { Button } from '@/components/ui/button';
@@ -21,8 +22,10 @@ export default function ProfilePage() {
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
 
-  // Update local state when profile loads
-  React.useEffect(() => {
+  // Update local state when profile loads without useEffect to avoid cascading renders
+  const [prevProfileData, setPrevProfileData] = useState(profileData);
+  if (profileData !== prevProfileData) {
+    setPrevProfileData(profileData);
     if (profileData?.data) {
       setName(profileData.data.name);
       setPhoneNumber(profileData.data.phoneNumber || '');
@@ -30,7 +33,7 @@ export default function ProfilePage() {
         setAvatarPreview(profileData.data.avatar);
       }
     }
-  }, [profileData]);
+  }
 
   const handleAvatarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
@@ -93,7 +96,14 @@ export default function ProfilePage() {
             <div className="flex items-center gap-4 mb-2">
                <div className="relative h-16 w-16 rounded-full bg-surface-raised flex items-center justify-center overflow-hidden border border-border group">
                   {avatarPreview ? (
-                    <img src={avatarPreview} alt="Profile" className="h-full w-full object-cover" />
+                    <Image 
+                      src={avatarPreview} 
+                      alt="Profile" 
+                      className="h-full w-full object-cover" 
+                      width={64} 
+                      height={64} 
+                      unoptimized={avatarPreview.startsWith('blob:')} 
+                    />
                   ) : (
                     <span className="text-2xl font-semibold">{name.charAt(0) || 'U'}</span>
                   )}

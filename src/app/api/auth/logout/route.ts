@@ -20,7 +20,7 @@ export async function POST(request: Request) {
     const res = NextResponse.json({ success: true }, { status: 200 });
     res.cookies.delete('refreshToken');
     return res;
-  } catch (error: unknown) {
+  } catch {
     // Even if backend fails, clear the local cookie to force logout
     const res = NextResponse.json({ success: true }, { status: 200 });
     res.cookies.delete('refreshToken');

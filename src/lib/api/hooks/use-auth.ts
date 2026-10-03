@@ -12,7 +12,7 @@ export function useLogin() {
       setAuth(data.accessToken, data.user);
       toast.success('Successfully logged in');
     },
-    onError: (error: any) => {
+    onError: (error: Error & { payload?: { message?: string } }) => {
       toast.error(error?.payload?.message || error.message || 'Login failed');
     },
   });
@@ -24,7 +24,7 @@ export function useRegister() {
     onSuccess: () => {
       toast.success('Registration successful! Please log in.');
     },
-    onError: (error: any) => {
+    onError: (error: Error & { payload?: { message?: string } }) => {
       toast.error(error?.payload?.message || error.message || 'Registration failed');
     },
   });
@@ -50,7 +50,7 @@ export function useForgotPassword() {
     onSuccess: () => {
       toast.success('Password reset email sent (if email exists)');
     },
-    onError: (error: any) => {
+    onError: (error: Error & { payload?: { message?: string } }) => {
       toast.error(error?.payload?.message || error.message || 'Failed to request reset');
     },
   });
@@ -62,7 +62,7 @@ export function useResetPassword() {
     onSuccess: () => {
       toast.success('Password has been reset successfully');
     },
-    onError: (error: any) => {
+    onError: (error: Error & { payload?: { message?: string } }) => {
       toast.error(error?.payload?.message || error.message || 'Failed to reset password');
     },
   });

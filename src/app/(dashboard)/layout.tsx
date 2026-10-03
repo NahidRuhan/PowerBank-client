@@ -8,10 +8,10 @@ import { Sidebar } from '@/components/layout/sidebar';
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const { isAuthenticated, setAuth } = useAuthStore();
-  const [isInitializing, setIsInitializing] = useState(true);
+  const [isInitializing, setIsInitializing] = useState(!isAuthenticated);
 
   useEffect(() => {
-    if (!isAuthenticated) {
+    if (!isAuthenticated && isInitializing) {
       // On hard reload, Zustand is empty but we likely have a httpOnly cookie
       // Attempt to silently refresh to get the access token and user state
       fetch('/api/auth/refresh', { method: 'POST' })
@@ -25,10 +25,11 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         })
         .catch(() => router.push('/login'))
         .finally(() => setIsInitializing(false));
-    } else {
-      setIsInitializing(false);
+    } else if (!isAuthenticated && !isInitializing) {
+      // If user logs out while on the dashboard, redirect without trying to refresh
+      router.push('/login');
     }
-  }, [isAuthenticated, router, setAuth]);
+  }, [isAuthenticated, isInitializing, router, setAuth]);
 
   if (isInitializing || !isAuthenticated) {
     return (
@@ -39,9 +40,9 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   }
 
   return (
-    <div className="flex h-[100dvh] w-full bg-canvas overflow-hidden">
+    <div className="flex h-dvh w-full bg-canvas overflow-hidden">
       {/* Desktop Sidebar */}
-      <div className="hidden md:flex md:flex-shrink-0">
+      <div className="hidden md:flex md:shrink-0">
         <Sidebar />
       </div>
 

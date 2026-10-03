@@ -1,14 +1,5 @@
 import { create } from 'zustand';
-
-interface User {
-  id: string;
-  email: string;
-  name: string;
-  role: 'CUSTOMER' | 'OPERATOR' | 'ADMIN';
-  meterNumber: string;
-  areaId: string | null;
-  avatar?: string;
-}
+import { User } from '@/lib/types/user';
 
 interface AuthState {
   accessToken: string | null;

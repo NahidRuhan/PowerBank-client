@@ -59,7 +59,7 @@ apiClient.interceptors.response.use(
           originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
         }
         return apiClient(originalRequest);
-      } catch (refreshError) {
+      } catch {
         // Refresh failed (e.g. token expired/invalid), logout user
         useAuthStore.getState().clearAuth();
         // Option: redirect to login via window.location here if desired, 
@@ -68,7 +68,7 @@ apiClient.interceptors.response.use(
     }
 
     // 2. Format custom ApiError
-    const payload = error.response?.data as any;
+    const payload = error.response?.data as { message?: string; [key: string]: unknown } | undefined;
     const message = payload?.message || error.message || 'An unexpected error occurred';
     
     throw new ApiError(message, error.response?.status || 500, payload);

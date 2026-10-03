@@ -1,26 +1,24 @@
 import { apiClient } from '../client';
 import { ApiResponse } from '../../types/api';
-import { User } from '../../types/auth'; // it's actually in types/user, but we can reuse User type
-// Let's import from user
-import { UpdateProfileRequest } from '../../types/user';
+import { User } from '../../types/user';
 
 export const userEndpoints = {
-  getProfile: async (): Promise<ApiResponse<any>> => {
-    const response = await apiClient.get<any>('/users/me');
-    return response as any;
+  getProfile: async (): Promise<ApiResponse<User>> => {
+    const response = await apiClient.get<ApiResponse<User>>('/users/me');
+    return response as unknown as ApiResponse<User>;
   },
 
-  updateProfile: async (data: any): Promise<ApiResponse<any>> => {
+  updateProfile: async (data: Partial<User> | FormData): Promise<ApiResponse<User>> => {
     // Determine if data is FormData
     const isFormData = data instanceof FormData;
-    const response = await apiClient.patch<any>('/users/me', data, {
+    const response = await apiClient.patch<ApiResponse<User>>('/users/me', data, {
       headers: isFormData ? { 'Content-Type': 'multipart/form-data' } : {}
     });
-    return response as any;
+    return response as unknown as ApiResponse<User>;
   },
 
-  changePassword: async (data: any): Promise<ApiResponse<any>> => {
-    const response = await apiClient.patch<any>('/users/me/password', data);
-    return response as any;
+  changePassword: async (data: Record<string, unknown>): Promise<ApiResponse<null>> => {
+    const response = await apiClient.patch<ApiResponse<null>>('/users/me/password', data);
+    return response as unknown as ApiResponse<null>;
   }
 };

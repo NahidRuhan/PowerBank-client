@@ -1,6 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { userEndpoints } from '../endpoints/users';
-import { useAuthStore } from '@/stores/auth-store';
 import { toast } from 'sonner';
 
 export function useProfile() {
@@ -26,7 +25,7 @@ export function useUpdateProfile() {
       queryClient.invalidateQueries({ queryKey: ['profile'] });
       toast.success('Profile updated successfully');
     },
-    onError: (error: any) => {
+    onError: (error: Error & { payload?: { message?: string } }) => {
       toast.error(error?.payload?.message || error.message || 'Failed to update profile');
     },
   });
@@ -38,7 +37,7 @@ export function useChangePassword() {
     onSuccess: () => {
       toast.success('Password changed successfully');
     },
-    onError: (error: any) => {
+    onError: (error: Error & { payload?: { message?: string } }) => {
       toast.error(error?.payload?.message || error.message || 'Failed to change password');
     },
   });

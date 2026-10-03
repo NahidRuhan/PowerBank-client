@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { useAuthStore } from '@/stores/auth-store';
 import { 
@@ -11,8 +12,7 @@ import {
   Warning, 
   Receipt, 
   ShieldCheck,
-  SignOut,
-  List
+  SignOut
 } from '@phosphor-icons/react';
 import { useLogout } from '@/lib/api/hooks/use-auth';
 import { Button } from '@/components/ui/button';
@@ -62,7 +62,7 @@ export function Sidebar() {
                 }`}
               >
                 <item.icon
-                  className={`mr-3 h-5 w-5 flex-shrink-0 ${
+                  className={`mr-3 h-5 w-5 shrink-0 ${
                     isActive ? 'text-accent' : 'text-ink-tertiary group-hover:text-ink-secondary'
                   }`}
                   weight={isActive ? "fill" : "regular"}
@@ -80,13 +80,13 @@ export function Sidebar() {
           <Link href="/profile" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
             <div className="h-9 w-9 rounded-full bg-border flex items-center justify-center overflow-hidden">
               {user?.avatar ? (
-                <img src={user.avatar} alt="Profile" className="h-full w-full object-cover" />
+                <Image src={user.avatar} alt="Profile" className="h-full w-full object-cover" width={36} height={36} />
               ) : (
                 <span className="text-sm font-medium">{user?.name?.charAt(0) || 'U'}</span>
               )}
             </div>
             <div className="flex flex-col">
-              <span className="text-sm font-medium text-ink-primary leading-none truncate max-w-[130px]">{user?.name}</span>
+              <span className="text-sm font-medium text-ink-primary leading-none truncate max-w-32.5">{user?.name}</span>
               <span className="text-xs text-ink-tertiary mt-1 capitalize">{user?.role.toLowerCase()}</span>
             </div>
           </Link>
