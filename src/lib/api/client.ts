@@ -8,9 +8,7 @@ export const apiClient = axios.create({
   baseURL,
   headers: {
     'Content-Type': 'application/json',
-  },
-  // Ensure cookies are sent (for any backend cookies if needed, though we use proxy mostly)
-  withCredentials: true, 
+  }
 });
 
 // Intercept requests to attach Bearer token from Zustand
@@ -70,8 +68,8 @@ apiClient.interceptors.response.use(
     }
 
     // 2. Format custom ApiError
-    let payload = error.response?.data as any;
-    let message = payload?.message || error.message || 'An unexpected error occurred';
+    const payload = error.response?.data as any;
+    const message = payload?.message || error.message || 'An unexpected error occurred';
     
     throw new ApiError(message, error.response?.status || 500, payload);
   }
