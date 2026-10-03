@@ -79,7 +79,11 @@ export function Sidebar() {
         <div className="flex w-full flex-col gap-3">
           <Link href="/profile" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
             <div className="h-9 w-9 rounded-full bg-border flex items-center justify-center overflow-hidden">
-              <span className="text-sm font-medium">{user?.name?.charAt(0) || 'U'}</span>
+              {user?.avatar ? (
+                <img src={user.avatar} alt="Profile" className="h-full w-full object-cover" />
+              ) : (
+                <span className="text-sm font-medium">{user?.name?.charAt(0) || 'U'}</span>
+              )}
             </div>
             <div className="flex flex-col">
               <span className="text-sm font-medium text-ink-primary leading-none truncate max-w-[130px]">{user?.name}</span>

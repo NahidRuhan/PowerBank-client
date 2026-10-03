@@ -7,6 +7,7 @@ interface User {
   role: 'CUSTOMER' | 'OPERATOR' | 'ADMIN';
   meterNumber: string;
   areaId: string | null;
+  avatar?: string;
 }
 
 interface AuthState {

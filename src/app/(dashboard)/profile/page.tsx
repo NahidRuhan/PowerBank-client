@@ -15,6 +15,8 @@ export default function ProfilePage() {
 
   const [name, setName] = useState(user?.name || '');
   const [phoneNumber, setPhoneNumber] = useState('');
+  const [avatarFile, setAvatarFile] = useState<File | null>(null);
+  const [avatarPreview, setAvatarPreview] = useState<string | null>(null);
   
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
@@ -24,12 +26,28 @@ export default function ProfilePage() {
     if (profileData?.data) {
       setName(profileData.data.name);
       setPhoneNumber(profileData.data.phoneNumber || '');
+      if (profileData.data.avatar) {
+        setAvatarPreview(profileData.data.avatar);
+      }
     }
   }, [profileData]);
 
+  const handleAvatarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0];
+      setAvatarFile(file);
+      setAvatarPreview(URL.createObjectURL(file));
+    }
+  };
+
   const handleUpdateProfile = (e: React.FormEvent) => {
     e.preventDefault();
-    updateProfileMutation.mutate({ name, phoneNumber });
+    const formData = new FormData();
+    formData.append('name', name);
+    if (phoneNumber) formData.append('phoneNumber', phoneNumber);
+    if (avatarFile) formData.append('avatar', avatarFile);
+    
+    updateProfileMutation.mutate(formData);
   };
 
   const handleChangePassword = (e: React.FormEvent) => {
@@ -73,8 +91,22 @@ export default function ProfilePage() {
         <div className="md:col-span-2">
           <form onSubmit={handleUpdateProfile} className="bg-surface rounded-xl border border-border p-6 shadow-[0_1px_3px_rgba(0,0,0,0.04)] flex flex-col gap-4">
             <div className="flex items-center gap-4 mb-2">
-               <div className="h-16 w-16 rounded-full bg-surface-raised flex items-center justify-center overflow-hidden border border-border">
-                  <span className="text-2xl font-semibold">{name.charAt(0) || 'U'}</span>
+               <div className="relative h-16 w-16 rounded-full bg-surface-raised flex items-center justify-center overflow-hidden border border-border group">
+                  {avatarPreview ? (
+                    <img src={avatarPreview} alt="Profile" className="h-full w-full object-cover" />
+                  ) : (
+                    <span className="text-2xl font-semibold">{name.charAt(0) || 'U'}</span>
+                  )}
+                  <label htmlFor="avatar-upload" className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 cursor-pointer transition-opacity">
+                    <span className="text-white text-xs font-medium">Upload</span>
+                  </label>
+                  <input
+                    id="avatar-upload"
+                    type="file"
+                    accept="image/*"
+                    className="hidden"
+                    onChange={handleAvatarChange}
+                  />
                </div>
                <div>
                  <span className={`inline-flex rounded-full px-2.5 py-0.5 text-xs font-medium ${roleColors[userRole as keyof typeof roleColors]}`}>

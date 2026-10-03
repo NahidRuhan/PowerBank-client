@@ -11,7 +11,11 @@ export const userEndpoints = {
   },
 
   updateProfile: async (data: any): Promise<ApiResponse<any>> => {
-    const response = await apiClient.patch<any>('/users/me', data);
+    // Determine if data is FormData
+    const isFormData = data instanceof FormData;
+    const response = await apiClient.patch<any>('/users/me', data, {
+      headers: isFormData ? { 'Content-Type': 'multipart/form-data' } : {}
+    });
     return response as any;
   },
 
