@@ -2,7 +2,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { getSubstations, getSubstationById, createSubstation, updateSubstation, deleteSubstation } from '../endpoints/substations';
 import { Substation } from '../../types/infrastructure';
 
-export const useSubstations = (params?: Record<string, any>) => {
+export const useSubstations = (params?: Record<string, unknown>) => {
   return useQuery({
     queryKey: ['substations', params],
     queryFn: () => getSubstations(params),

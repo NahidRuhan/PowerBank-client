@@ -21,4 +21,9 @@ export interface ScheduledOutage {
   createdBy: string;
   createdAt: string;
   updatedAt: string;
+  feeder?: {
+    code: string;
+    name: string;
+    loadMW: number;
+  };
 }

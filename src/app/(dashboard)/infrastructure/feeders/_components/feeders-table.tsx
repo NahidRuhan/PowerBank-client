@@ -57,6 +57,7 @@ export function FeedersTable() {
       <Table>
         <TableHeader>
           <TableRow>
+            <TableHead>ID</TableHead>
             <TableHead>Code</TableHead>
             <TableHead>Name</TableHead>
             <TableHead>Load (MW)</TableHead>
@@ -74,6 +75,7 @@ export function FeedersTable() {
                 feeder.status === 'LOAD_SHED' && 'bg-warning-muted/20 hover:bg-warning-muted/30'
               )}
             >
+              <TableCell className="font-mono text-xs">{feeder.id}</TableCell>
               <TableCell className="font-mono font-medium">{feeder.code}</TableCell>
               <TableCell>
                 <Link href={`/infrastructure/feeders/${feeder.id}`} className="hover:underline text-accent">

@@ -2,7 +2,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { getFeeders, getFeederById, createFeeder, updateFeeder, deleteFeeder } from '../endpoints/feeders';
 import { Feeder } from '../../types/infrastructure';
 
-export const useFeeders = (params?: Record<string, any>) => {
+export const useFeeders = (params?: Record<string, unknown>) => {
   return useQuery({
     queryKey: ['feeders', params],
     queryFn: () => getFeeders(params),

@@ -2,7 +2,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { getAreas, searchAreas, getAreaById, createArea, updateArea, deleteArea } from '../endpoints/areas';
 import { Area } from '../../types/infrastructure';
 
-export const useAreas = (params?: Record<string, any>) => {
+export const useAreas = (params?: Record<string, unknown>) => {
   return useQuery({
     queryKey: ['areas', params],
     queryFn: () => getAreas(params),
