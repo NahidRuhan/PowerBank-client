@@ -24,7 +24,7 @@ export function Sidebar() {
 
   const navigation = [
     { name: 'Dashboard', href: '/dashboard', icon: SquaresFour, roles: ['CUSTOMER', 'OPERATOR', 'ADMIN'] },
-    { name: 'Infrastructure', href: '/infrastructure', icon: MapPin, roles: ['OPERATOR', 'ADMIN'] },
+    { name: 'Infrastructure', href: '/infrastructure', icon: MapPin, roles: ['CUSTOMER', 'OPERATOR', 'ADMIN'] },
     { name: 'Schedules', href: '/schedules', icon: Calendar, roles: ['CUSTOMER', 'OPERATOR', 'ADMIN'] },
     { name: 'Incidents', href: '/incidents', icon: Warning, roles: ['CUSTOMER', 'OPERATOR', 'ADMIN'] },
     { name: 'Billing', href: '/billing', icon: Receipt, roles: ['CUSTOMER', 'ADMIN'] },
@@ -32,6 +32,34 @@ export function Sidebar() {
   ];
 
   const allowedNav = navigation.filter((item) => user && item.roles.includes(user.role));
+
+  const mainMenu = allowedNav.filter(item => item.name !== 'Admin' && item.name !== 'Billing');
+  const userMenu = allowedNav.filter(item => item.name === 'Billing');
+  const systemMenu = allowedNav.filter(item => item.name === 'Admin');
+
+  const renderNavItem = (item: typeof navigation[0]) => {
+    const isActive = pathname.startsWith(item.href);
+    return (
+      <Link
+        key={item.name}
+        href={item.href}
+        className={`group flex items-center px-3 py-2 text-sm font-medium rounded-lg transition-colors ${
+          isActive
+            ? 'bg-accent/10 text-accent border-l-2 border-accent'
+            : 'text-ink-secondary hover:bg-surface hover:text-ink-primary border-l-2 border-transparent'
+        }`}
+      >
+        <item.icon
+          className={`mr-3 h-5 w-5 shrink-0 ${
+            isActive ? 'text-accent' : 'text-ink-tertiary group-hover:text-ink-secondary'
+          }`}
+          weight={isActive ? "fill" : "regular"}
+          aria-hidden="true"
+        />
+        {item.name}
+      </Link>
+    );
+  };
 
   return (
     <div className="flex h-full w-64 flex-col border-r border-border bg-surface-raised">
@@ -47,31 +75,25 @@ export function Sidebar() {
       </div>
       
       <div className="flex flex-1 flex-col overflow-y-auto pt-5 pb-4">
-        <nav className="mt-2 flex-1 space-y-1 px-3">
-          <p className="px-4 text-xs font-medium text-ink-tertiary uppercase tracking-wider mb-2">Main Menu</p>
-          {allowedNav.map((item) => {
-            const isActive = pathname.startsWith(item.href);
-            return (
-              <Link
-                key={item.name}
-                href={item.href}
-                className={`group flex items-center px-3 py-2 text-sm font-medium rounded-lg transition-colors ${
-                  isActive
-                    ? 'bg-accent/10 text-accent border-l-2 border-accent'
-                    : 'text-ink-secondary hover:bg-surface hover:text-ink-primary border-l-2 border-transparent'
-                }`}
-              >
-                <item.icon
-                  className={`mr-3 h-5 w-5 shrink-0 ${
-                    isActive ? 'text-accent' : 'text-ink-tertiary group-hover:text-ink-secondary'
-                  }`}
-                  weight={isActive ? "fill" : "regular"}
-                  aria-hidden="true"
-                />
-                {item.name}
-              </Link>
-            );
-          })}
+        <nav className="mt-2 flex-1 space-y-6 px-3">
+          <div className="space-y-1">
+            <p className="px-4 text-xs font-medium text-ink-tertiary uppercase tracking-wider mb-2">Main Menu</p>
+            {mainMenu.map(renderNavItem)}
+          </div>
+
+          {userMenu.length > 0 && (
+            <div className="space-y-1">
+              <p className="px-4 text-xs font-medium text-ink-tertiary uppercase tracking-wider mb-2">Account</p>
+              {userMenu.map(renderNavItem)}
+            </div>
+          )}
+
+          {systemMenu.length > 0 && (
+            <div className="space-y-1 pt-4 border-t border-border/50">
+              <p className="px-4 text-xs font-medium text-ink-tertiary uppercase tracking-wider mb-2">System</p>
+              {systemMenu.map(renderNavItem)}
+            </div>
+          )}
         </nav>
       </div>
 

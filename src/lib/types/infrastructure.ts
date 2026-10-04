@@ -8,6 +8,9 @@ export interface Zone {
   description?: string;
   createdAt: string;
   updatedAt: string;
+  _count?: {
+    substations: number;
+  };
 }
 
 export interface Substation {
@@ -19,6 +22,9 @@ export interface Substation {
   zone?: Zone;
   createdAt: string;
   updatedAt: string;
+  _count?: {
+    feeders: number;
+  };
 }
 
 export interface Feeder {
@@ -31,6 +37,9 @@ export interface Feeder {
   substation?: Substation;
   createdAt: string;
   updatedAt: string;
+  _count?: {
+    areas: number;
+  };
 }
 
 export interface Area {
@@ -50,6 +59,12 @@ export interface Meter {
   number: string;
   areaId: string;
   userId?: string;
+  area?: Area;
+  user?: {
+    id: string;
+    name: string;
+    email: string;
+  };
   createdAt: string;
   updatedAt: string;
 }

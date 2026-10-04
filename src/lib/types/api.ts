@@ -10,6 +10,18 @@ export interface ApiResponse<T = unknown> {
   };
 }
 
+export interface PaginatedResponse<T> {
+  success: boolean;
+  message?: string;
+  data: T[];
+  meta: {
+    page: number;
+    limit: number;
+    total: number;
+    pages: number;
+  };
+}
+
 export class ApiError extends Error {
   constructor(
     message: string,

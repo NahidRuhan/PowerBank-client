@@ -1,11 +1,11 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React, { useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useAuthStore } from '@/stores/auth-store';
 import { User } from '@/lib/types/user';
 
-export default function CallbackPage() {
+function CallbackContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const setAuth = useAuthStore((state) => state.setAuth);
@@ -47,5 +47,18 @@ export default function CallbackPage() {
       <div className="h-8 w-8 animate-spin rounded-full border-4 border-surface-raised border-t-accent" />
       <p className="text-sm text-ink-secondary">Authenticating...</p>
     </div>
+  );
+}
+
+export default function CallbackPage() {
+  return (
+    <Suspense fallback={
+      <div className="flex flex-col items-center justify-center gap-4 py-20">
+        <div className="h-8 w-8 animate-spin rounded-full border-4 border-surface-raised border-t-accent" />
+        <p className="text-sm text-ink-secondary">Loading...</p>
+      </div>
+    }>
+      <CallbackContent />
+    </Suspense>
   );
 }
