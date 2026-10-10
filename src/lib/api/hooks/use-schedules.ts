@@ -1,7 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import * as schedulesApi from '../endpoints/schedules';
 
-export const useSchedules = (params?: Record<string, unknown>) => {
+export const useSchedules = (params?: any) => {
   return useQuery({
     queryKey: ['schedules', params],
     queryFn: () => schedulesApi.getSchedules(params),

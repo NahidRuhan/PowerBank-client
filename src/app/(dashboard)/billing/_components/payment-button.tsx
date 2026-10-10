@@ -20,9 +20,8 @@ export function PaymentButton({ billId }: PaymentButtonProps) {
         // Redirect to Stripe checkout url
         if (data.data?.checkoutUrl) {
           window.location.href = data.data.checkoutUrl;
-        } else if (data.checkoutUrl) { // Fallback if unwrapped differently
-          // @ts-ignore
-          window.location.href = data.checkoutUrl;
+        } else if ((data as any).checkoutUrl) { // Fallback if unwrapped differently
+          window.location.href = (data as any).checkoutUrl;
         } else {
           setLoading(false);
         }

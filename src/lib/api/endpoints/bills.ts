@@ -12,7 +12,7 @@ export const billEndpoints = {
     return { ...response, data: { count } } as ApiResponse<{ count: number }>;
   },
 
-  getBills: async (params?: Record<string, unknown>) => {
+  getBills: async (params?: any) => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const response: any = await apiClient.get('/bills', { params });
     const d = response.data || {};
@@ -20,7 +20,7 @@ export const billEndpoints = {
     return { data: bills as Bill[], meta: d.meta || d.data?.meta };
   },
 
-  getMyBills: async (params?: Record<string, unknown>) => {
+  getMyBills: async (params?: any) => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const response: any = await apiClient.get('/bills/my-bills', { params });
     const d = response.data || {};

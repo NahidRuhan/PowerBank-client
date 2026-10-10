@@ -6,7 +6,7 @@ export const createIncident = async (data: unknown): Promise<OutageIncident> => 
   return apiClient('/incidents', { method: 'POST', data });
 };
 
-export const getIncidents = async (params?: Record<string, unknown>): Promise<PaginatedResponse<OutageIncident>> => {
+export const getIncidents = async (params?: any): Promise<PaginatedResponse<OutageIncident>> => {
   const query = new URLSearchParams(params || {}).toString();
   return apiClient(`/incidents${query ? '?' + query : ''}`);
 };

@@ -2,7 +2,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { getMeters, getMeterById, createMeter, updateMeter, deleteMeter } from '../endpoints/meters';
 import { Meter } from '../../types/infrastructure';
 
-export const useMeters = (params?: Record<string, unknown>) => {
+export const useMeters = (params?: any) => {
   return useQuery({
     queryKey: ['meters', params],
     queryFn: () => getMeters(params),

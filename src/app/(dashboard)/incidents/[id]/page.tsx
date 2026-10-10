@@ -12,7 +12,7 @@ export default function IncidentDetailPage() {
   const params = useParams();
   const id = params.id as string;
   const { data: incidentRaw, isLoading } = useIncident(id);
-  const incident = incidentRaw?.data?.incident || incidentRaw?.data || incidentRaw;
+  const incident = (incidentRaw as any)?.data?.incident || (incidentRaw as any)?.data || incidentRaw;
   const updateIncident = useUpdateIncident();
 
   if (isLoading) return <div>Loading...</div>;

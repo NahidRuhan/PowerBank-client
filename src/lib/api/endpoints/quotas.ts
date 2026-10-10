@@ -6,7 +6,7 @@ export const createQuota = async (data: unknown): Promise<SheddingQuota> => {
   return apiClient('/quotas', { method: 'POST', data });
 };
 
-export const getQuotas = async (params?: Record<string, unknown>): Promise<PaginatedResponse<SheddingQuota>> => {
+export const getQuotas = async (params?: any): Promise<PaginatedResponse<SheddingQuota>> => {
   const query = new URLSearchParams(params || {}).toString();
   return apiClient(`/quotas${query ? '?' + query : ''}`);
 };

@@ -17,7 +17,7 @@ export const userEndpoints = {
     return response as unknown as ApiResponse<User>;
   },
 
-  changePassword: async (data: Record<string, unknown>): Promise<ApiResponse<null>> => {
+  changePassword: async (data: any): Promise<ApiResponse<null>> => {
     const response = await apiClient.patch<ApiResponse<null>>('/users/me/password', data);
     return response as unknown as ApiResponse<null>;
   }

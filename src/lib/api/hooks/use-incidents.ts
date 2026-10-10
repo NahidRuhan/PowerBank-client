@@ -1,7 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import * as incidentsApi from '../endpoints/incidents';
 
-export const useIncidents = (params?: Record<string, unknown>) => {
+export const useIncidents = (params?: any) => {
   return useQuery({
     queryKey: ['incidents', params],
     queryFn: () => incidentsApi.getIncidents(params),

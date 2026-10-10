@@ -13,7 +13,7 @@ export function SchedulesTable() {
   const { data, isLoading } = useSchedules({ page, limit: 10 });
 
   if (isLoading) return <div>Loading...</div>;
-  const items = Array.isArray(data?.data) ? data.data : (data?.data?.schedules || data?.data?.data || []);
+  const items = Array.isArray((data as any)?.data) ? (data as any).data : ((data as any)?.data?.schedules || (data as any)?.data?.data || []);
 
   return (
     <div className="space-y-4">
@@ -53,7 +53,7 @@ export function SchedulesTable() {
       </div>
       <DataTablePagination 
         page={page} 
-        totalPages={data?.meta?.totalPages || data?.data?.meta?.totalPages || 1} 
+        totalPages={(data as any)?.meta?.pages || (data as any)?.data?.meta?.pages || 1} 
         onPageChange={setPage} 
       />
     </div>

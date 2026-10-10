@@ -6,7 +6,7 @@ export const createSchedule = async (data: unknown): Promise<ScheduledOutage> =>
   return apiClient('/schedules', { method: 'POST', data });
 };
 
-export const getSchedules = async (params?: Record<string, unknown>): Promise<PaginatedResponse<ScheduledOutage>> => {
+export const getSchedules = async (params?: any): Promise<PaginatedResponse<ScheduledOutage>> => {
   const query = new URLSearchParams(params || {}).toString();
   return apiClient(`/schedules${query ? '?' + query : ''}`);
 };

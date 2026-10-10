@@ -14,7 +14,7 @@ export function IncidentsTable() {
   const { data, isLoading } = useIncidents({ page, limit: 10 });
 
   if (isLoading) return <div>Loading...</div>;
-  const items = Array.isArray(data?.data) ? data.data : (data?.data?.incidents || data?.data?.data || []);
+  const items = Array.isArray((data as any)?.data) ? (data as any).data : ((data as any)?.data?.incidents || (data as any)?.data?.data || []);
 
   return (
     <div className="space-y-4">
@@ -35,7 +35,7 @@ export function IncidentsTable() {
               <TableRow key={incident.id}>
                 <TableCell className="font-mono">{incident.id.slice(0, 8)}</TableCell>
                 <TableCell className="font-mono">{incident.feederId}</TableCell>
-                <TableCell><PriorityBadge priority={incident.priority || 'MEDIUM'} /></TableCell>
+                <TableCell><PriorityBadge priority={(incident.priority as any) || 'MEDIUM'} /></TableCell>
                 <TableCell><StatusBadge status={incident.status} /></TableCell>
                 <TableCell>{incident.estimatedRestoration ? format(new Date(incident.estimatedRestoration), 'MMM d, HH:mm') : 'Not set'}</TableCell>
                 <TableCell>
@@ -50,7 +50,7 @@ export function IncidentsTable() {
       </div>
       <DataTablePagination 
         page={page} 
-        totalPages={data?.meta?.totalPages || data?.data?.meta?.totalPages || 1} 
+        totalPages={(data as any)?.meta?.pages || (data as any)?.data?.meta?.pages || 1} 
         onPageChange={setPage} 
       />
     </div>

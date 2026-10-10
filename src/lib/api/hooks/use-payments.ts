@@ -2,7 +2,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { paymentEndpoints } from '../endpoints/payments';
 import { toast } from 'sonner';
 
-export function useMyPayments(params?: Record<string, unknown>) {
+export function useMyPayments(params?: any) {
   return useQuery({
     queryKey: ['my-payments', params],
     queryFn: () => paymentEndpoints.getMyPayments(params),

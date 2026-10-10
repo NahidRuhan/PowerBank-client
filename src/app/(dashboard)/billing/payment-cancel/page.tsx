@@ -24,11 +24,11 @@ export default function PaymentCancelPage() {
           </p>
         </CardContent>
         <CardFooter className="flex justify-center space-x-4">
-          <Button variant="outline" asChild>
-            <Link href="/dashboard">Go to Dashboard</Link>
+          <Button variant="outline" render={<Link href="/dashboard" />} nativeButton={false}>
+            Go to Dashboard
           </Button>
-          <Button asChild>
-            <Link href="/billing">Try Again</Link>
+          <Button render={<Link href="/billing" />} nativeButton={false}>
+            Try Again
           </Button>
         </CardFooter>
       </Card>

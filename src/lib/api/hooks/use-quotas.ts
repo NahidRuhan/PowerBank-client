@@ -1,7 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import * as quotasApi from '../endpoints/quotas';
 
-export const useQuotas = (params?: Record<string, unknown>) => {
+export const useQuotas = (params?: any) => {
   return useQuery({
     queryKey: ['quotas', params],
     queryFn: () => quotasApi.getQuotas(params),

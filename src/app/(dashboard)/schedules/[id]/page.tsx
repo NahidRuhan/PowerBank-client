@@ -10,7 +10,7 @@ export default function ScheduleDetailPage() {
   const params = useParams();
   const id = params.id as string;
   const { data: scheduleRaw, isLoading } = useSchedule(id);
-  const schedule = scheduleRaw?.data?.schedule || scheduleRaw?.data || scheduleRaw;
+  const schedule = (scheduleRaw as any)?.data?.schedule || (scheduleRaw as any)?.data || scheduleRaw;
 
   if (isLoading) return <div>Loading...</div>;
   if (!schedule) return <div>Not found</div>;

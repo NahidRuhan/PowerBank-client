@@ -2,8 +2,8 @@ import { apiClient } from '../client';
 import { Meter } from '../../types/infrastructure';
 import { PaginatedResponse } from '../../types/api';
 
-export const getMeters = async (params?: Record<string, unknown>) => {
-  const { data } = await apiClient.get<unknown>('/meters', { params });
+export const getMeters = async (params?: any) => {
+  const { data } = await apiClient.get<any>('/meters', { params });
   
   // Handle both the old array response and the new paginated response
   if (Array.isArray(data)) {

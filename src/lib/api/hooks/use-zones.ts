@@ -2,7 +2,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { getZones, getZoneById, createZone, updateZone, deleteZone } from '../endpoints/zones';
 import { Zone } from '../../types/infrastructure';
 
-export const useZones = (params?: Record<string, unknown>) => {
+export const useZones = (params?: any) => {
   return useQuery({
     queryKey: ['zones', params],
     queryFn: () => getZones(params),

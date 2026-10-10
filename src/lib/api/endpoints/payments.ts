@@ -10,7 +10,7 @@ export const paymentEndpoints = {
     return { ...response, data: result } as ApiResponse<{ checkoutUrl: string }>;
   },
 
-  getMyPayments: async (params?: Record<string, unknown>) => {
+  getMyPayments: async (params?: any) => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const response: any = await apiClient.get('/payments/my-payments', { params });
     const d = response.data || {};

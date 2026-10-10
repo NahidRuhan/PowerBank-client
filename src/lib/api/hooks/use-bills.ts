@@ -2,7 +2,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { billEndpoints } from '../endpoints/bills';
 import { toast } from 'sonner';
 
-export function useBills(params?: Record<string, unknown>, options?: { enabled?: boolean }) {
+export function useBills(params?: any, options?: { enabled?: boolean }) {
   return useQuery({
     queryKey: ['bills', params],
     queryFn: () => billEndpoints.getBills(params),
@@ -10,7 +10,7 @@ export function useBills(params?: Record<string, unknown>, options?: { enabled?:
   });
 }
 
-export function useMyBills(params?: Record<string, unknown>, options?: { enabled?: boolean }) {
+export function useMyBills(params?: any, options?: { enabled?: boolean }) {
   return useQuery({
     queryKey: ['my-bills', params],
     queryFn: () => billEndpoints.getMyBills(params),

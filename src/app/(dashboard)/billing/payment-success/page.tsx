@@ -24,8 +24,8 @@ export default function PaymentSuccessPage() {
           </p>
         </CardContent>
         <CardFooter className="flex justify-center">
-          <Button asChild>
-            <Link href="/billing">Return to Billing</Link>
+          <Button render={<Link href="/billing" />} nativeButton={false}>
+            Return to Billing
           </Button>
         </CardFooter>
       </Card>
