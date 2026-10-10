@@ -82,11 +82,9 @@ function AdminBillingView() {
               {isProcessing ? 'Processing...' : 'Process Overdue'}
             </Button>
             <Dialog open={isGenerateOpen} onOpenChange={setIsGenerateOpen}>
-              <DialogTrigger asChild>
-                <Button>
-                  <Plus className="mr-2 h-4 w-4" />
-                  Generate Bills
-                </Button>
+              <DialogTrigger render={<Button />}>
+                <Plus className="mr-2 h-4 w-4" />
+                Generate Bills
               </DialogTrigger>
               <DialogContent>
                 <DialogHeader>
