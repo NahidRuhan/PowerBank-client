@@ -25,14 +25,22 @@ export function QuotasTable() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {items.map((quota: import('@/lib/types/schedule').SheddingQuota) => (
-              <TableRow key={quota.id}>
-                <TableCell className="font-mono text-xs">{quota.id}</TableCell>
-                <TableCell>{format(new Date(quota.date), 'MMM d, yyyy')}</TableCell>
-                <TableCell>{quota.timeSlot}</TableCell>
-                <TableCell className="font-mono">{quota.targetMW} MW</TableCell>
+            {items.length === 0 ? (
+              <TableRow>
+                <TableCell colSpan={4} className="h-24 text-center">
+                  No Data
+                </TableCell>
               </TableRow>
-            ))}
+            ) : (
+              items.map((quota: import('@/lib/types/schedule').SheddingQuota) => (
+                <TableRow key={quota.id}>
+                  <TableCell className="font-mono text-xs">{quota.id}</TableCell>
+                  <TableCell>{format(new Date(quota.date), 'MMM d, yyyy')}</TableCell>
+                  <TableCell>{quota.timeSlot}</TableCell>
+                  <TableCell className="font-mono">{quota.targetMW} MW</TableCell>
+                </TableRow>
+              ))
+            )}
           </TableBody>
         </Table>
       </div>

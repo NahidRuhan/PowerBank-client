@@ -15,17 +15,13 @@ export const billEndpoints = {
   getBills: async (params?: any) => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const response: any = await apiClient.get('/bills', { params });
-    const d = response.data || {};
-    const bills = Array.isArray(d) ? d : (Array.isArray(d.bills) ? d.bills : (Array.isArray(d.data) ? d.data : (Array.isArray(d.data?.data) ? d.data.data : [])));
-    return { data: bills as Bill[], meta: d.meta || d.data?.meta };
+    return response;
   },
 
   getMyBills: async (params?: any) => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const response: any = await apiClient.get('/bills/my-bills', { params });
-    const d = response.data || {};
-    const bills = Array.isArray(d) ? d : (Array.isArray(d.bills) ? d.bills : (Array.isArray(d.data) ? d.data : (Array.isArray(d.data?.data) ? d.data.data : [])));
-    return { data: bills as Bill[], meta: d.meta || d.data?.meta };
+    return response;
   },
 
   processOverdue: async (): Promise<ApiResponse<{ count: number }>> => {

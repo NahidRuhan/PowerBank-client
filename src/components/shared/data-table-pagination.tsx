@@ -54,11 +54,11 @@ export function DataTablePagination({
   }
 
   return (
-    <div className="flex items-center justify-between px-2 py-4">
-      <div className="flex-1 text-sm text-ink-secondary">
+    <div className="flex flex-col sm:flex-row items-center justify-between px-2 py-4 gap-4">
+      <div className="flex-1 text-sm text-ink-secondary text-center sm:text-left w-full">
         Page {page} of {totalPages}
       </div>
-      <Pagination className="justify-end flex-1">
+      <Pagination className="justify-center sm:justify-end flex-1 w-full sm:w-auto">
         <PaginationContent>
           <PaginationItem>
             <PaginationPrevious

@@ -63,20 +63,28 @@ export function IncidentsTable() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {items.map((incident: import('@/lib/types/incident').OutageIncident) => (
-              <TableRow key={incident.id}>
-                <TableCell className="font-mono">{incident.id.slice(0, 8)}</TableCell>
-                <TableCell className="font-mono">{incident.feederId}</TableCell>
-                <TableCell><PriorityBadge priority={(incident.priority as any) || 'MEDIUM'} /></TableCell>
-                <TableCell><StatusBadge status={incident.status} /></TableCell>
-                <TableCell>{incident.estimatedRestoration ? format(new Date(incident.estimatedRestoration), 'MMM d, HH:mm') : 'Not set'}</TableCell>
-                <TableCell>
-                  <Link href={`/incidents/${incident.id}`}>
-                    <Button variant="outline" size="sm">View</Button>
-                  </Link>
+            {items.length === 0 ? (
+              <TableRow>
+                <TableCell colSpan={6} className="h-24 text-center">
+                  No Data
                 </TableCell>
               </TableRow>
-            ))}
+            ) : (
+              items.map((incident: import('@/lib/types/incident').OutageIncident) => (
+                <TableRow key={incident.id}>
+                  <TableCell className="font-mono">{incident.id.slice(0, 8)}</TableCell>
+                  <TableCell className="font-mono">{incident.feederId}</TableCell>
+                  <TableCell><PriorityBadge priority={(incident.priority as any) || 'MEDIUM'} /></TableCell>
+                  <TableCell><StatusBadge status={incident.status} /></TableCell>
+                  <TableCell>{incident.estimatedRestoration ? format(new Date(incident.estimatedRestoration), 'MMM d, HH:mm') : 'Not set'}</TableCell>
+                  <TableCell>
+                    <Link href={`/incidents/${incident.id}`}>
+                      <Button variant="outline" size="sm">View</Button>
+                    </Link>
+                  </TableCell>
+                </TableRow>
+              ))
+            )}
           </TableBody>
         </Table>
       </div>

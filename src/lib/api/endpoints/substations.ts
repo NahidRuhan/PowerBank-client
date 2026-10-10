@@ -4,7 +4,7 @@ import { PaginatedResponse } from '../../types/api';
 
 export const getSubstations = async (params?: any) => {
   const response: any = await apiClient.get('/substations', { params });
-  return { data: response.data.substations as Substation[], meta: response.data.meta };
+  return response;
 };
 
 export const getSubstationById = async (id: string) => {

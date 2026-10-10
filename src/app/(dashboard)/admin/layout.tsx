@@ -15,8 +15,8 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
   return (
     <div className="space-y-6">
-      <div className="border-b border-border">
-        <nav className="-mb-px flex space-x-8">
+      <div className="border-b border-border overflow-x-auto hide-scrollbar">
+        <nav className="-mb-px flex space-x-4 md:space-x-8 min-w-max px-1">
           {tabs.map((tab) => {
             const isActive = pathname === tab.href;
             return (
@@ -24,7 +24,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                 key={tab.name}
                 href={tab.href}
                 className={cn(
-                  'whitespace-nowrap border-b-2 py-4 px-1 text-sm font-medium',
+                  'whitespace-nowrap border-b-2 py-4 px-1 text-sm font-medium transition-colors',
                   isActive
                     ? 'border-accent text-accent'
                     : 'border-transparent text-ink-secondary hover:border-ink-tertiary hover:text-ink-primary'

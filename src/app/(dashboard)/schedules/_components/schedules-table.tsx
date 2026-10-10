@@ -31,23 +31,31 @@ export function SchedulesTable() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {items.map((schedule: import('@/lib/types/schedule').ScheduledOutage) => (
-              <TableRow key={schedule.id}>
-                <TableCell className="font-mono">{schedule.feederId}</TableCell>
-                <TableCell className="font-mono text-ink-secondary">{schedule.feeder?.loadMW ? `${schedule.feeder.loadMW} MW` : '—'}</TableCell>
-                <TableCell>{format(new Date(schedule.startTime), 'MMM d, HH:mm')}</TableCell>
-                <TableCell>{format(new Date(schedule.endTime), 'MMM d, HH:mm')}</TableCell>
-                <TableCell>
-                  <StatusBadge status={schedule.status} />
-                </TableCell>
-                <TableCell>{schedule.reason}</TableCell>
-                <TableCell>
-                  <Link href={`/schedules/${schedule.id}`}>
-                    <Button variant="outline" size="sm">View</Button>
-                  </Link>
+            {items.length === 0 ? (
+              <TableRow>
+                <TableCell colSpan={7} className="h-24 text-center">
+                  No Data
                 </TableCell>
               </TableRow>
-            ))}
+            ) : (
+              items.map((schedule: import('@/lib/types/schedule').ScheduledOutage) => (
+                <TableRow key={schedule.id}>
+                  <TableCell className="font-mono">{schedule.feederId}</TableCell>
+                  <TableCell className="font-mono text-ink-secondary">{schedule.feeder?.loadMW ? `${schedule.feeder.loadMW} MW` : '—'}</TableCell>
+                  <TableCell>{format(new Date(schedule.startTime), 'MMM d, HH:mm')}</TableCell>
+                  <TableCell>{format(new Date(schedule.endTime), 'MMM d, HH:mm')}</TableCell>
+                  <TableCell>
+                    <StatusBadge status={schedule.status} />
+                  </TableCell>
+                  <TableCell>{schedule.reason}</TableCell>
+                  <TableCell>
+                    <Link href={`/schedules/${schedule.id}`}>
+                      <Button variant="outline" size="sm">View</Button>
+                    </Link>
+                  </TableCell>
+                </TableRow>
+              ))
+            )}
           </TableBody>
         </Table>
       </div>

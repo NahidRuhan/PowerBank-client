@@ -4,7 +4,7 @@ import { PaginatedResponse } from '../../types/api';
 
 export const getFeeders = async (params?: any) => {
   const response: any = await apiClient.get('/feeders', { params });
-  return { data: response.data.feeders as Feeder[], meta: response.data.meta };
+  return response;
 };
 
 export const getFeederById = async (id: string) => {

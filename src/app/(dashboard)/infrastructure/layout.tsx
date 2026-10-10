@@ -23,21 +23,21 @@ export default function InfrastructureLayout({ children }: { children: ReactNode
         <span className="px-2 py-1 bg-surface rounded shadow-sm border border-border">Meters</span>
       </div>
       
-      <div className="border-b border-border">
-        <nav className="-mb-px flex space-x-8" aria-label="Tabs">
-          <Link href="/infrastructure/zones" className="border-transparent text-ink-secondary hover:text-ink-primary hover:border-border whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
+      <div className="border-b border-border overflow-x-auto hide-scrollbar">
+        <nav className="-mb-px flex space-x-4 md:space-x-8 min-w-max px-1" aria-label="Tabs">
+          <Link href="/infrastructure/zones" className="border-transparent text-ink-secondary hover:text-ink-primary hover:border-border whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm transition-colors">
             Zones
           </Link>
-          <Link href="/infrastructure/substations" className="border-transparent text-ink-secondary hover:text-ink-primary hover:border-border whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
+          <Link href="/infrastructure/substations" className="border-transparent text-ink-secondary hover:text-ink-primary hover:border-border whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm transition-colors">
             Substations
           </Link>
-          <Link href="/infrastructure/feeders" className="border-transparent text-ink-secondary hover:text-ink-primary hover:border-border whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
+          <Link href="/infrastructure/feeders" className="border-transparent text-ink-secondary hover:text-ink-primary hover:border-border whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm transition-colors">
             Feeders
           </Link>
-          <Link href="/infrastructure/areas" className="border-transparent text-ink-secondary hover:text-ink-primary hover:border-border whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
+          <Link href="/infrastructure/areas" className="border-transparent text-ink-secondary hover:text-ink-primary hover:border-border whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm transition-colors">
             Areas
           </Link>
-          <Link href="/infrastructure/meters" className="border-transparent text-ink-secondary hover:text-ink-primary hover:border-border whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
+          <Link href="/infrastructure/meters" className="border-transparent text-ink-secondary hover:text-ink-primary hover:border-border whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm transition-colors">
             Meters
           </Link>
         </nav>

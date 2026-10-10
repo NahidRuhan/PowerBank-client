@@ -4,12 +4,14 @@ import { PaginatedResponse } from '../../types/api';
 
 export const getAreas = async (params?: any) => {
   const response: any = await apiClient.get('/areas', { params });
-  return { data: response.data.areas as Area[], meta: response.data.meta };
+  return response;
 };
 
 export const searchAreas = async (q: string) => {
   const response: any = await apiClient.get('/areas/search', { params: { q } });
-  return { data: response.data as Area[] };
+  const d = response.data;
+  const areas = Array.isArray(d) ? d : (d?.areas ? d.areas : []);
+  return { data: areas as Area[] };
 };
 
 export const getAreaById = async (id: string) => {

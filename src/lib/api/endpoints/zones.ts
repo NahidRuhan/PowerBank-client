@@ -4,7 +4,7 @@ import { PaginatedResponse } from '../../types/api';
 
 export const getZones = async (params?: any) => {
   const response: any = await apiClient.get('/zones', { params });
-  return { data: response.data.zones as Zone[], meta: response.data.meta };
+  return response;
 };
 
 export const getZoneById = async (id: string) => {
