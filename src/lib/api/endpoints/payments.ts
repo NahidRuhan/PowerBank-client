@@ -3,9 +3,11 @@ import { ApiResponse, PaginatedResponse } from '../../types/api';
 import { Payment } from '../../types/billing';
 
 export const paymentEndpoints = {
-  initiatePayment: async (billId: string): Promise<ApiResponse<{ url: string }>> => {
-    const response = await apiClient.post<ApiResponse<{ url: string }>>('/payments/initiate', { billId });
-    return response as unknown as ApiResponse<{ url: string }>;
+  initiatePayment: async (billId: string): Promise<ApiResponse<{ checkoutUrl: string }>> => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const response: any = await apiClient.post('/payments/initiate', { billId });
+    const result = response.data?.data || response.data || response;
+    return { ...response, data: result } as ApiResponse<{ checkoutUrl: string }>;
   },
 
   getMyPayments: async (params?: Record<string, unknown>) => {

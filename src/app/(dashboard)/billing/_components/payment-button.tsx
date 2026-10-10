@@ -18,8 +18,11 @@ export function PaymentButton({ billId }: PaymentButtonProps) {
     initiatePayment(billId, {
       onSuccess: (data) => {
         // Redirect to Stripe checkout url
-        if (data.data?.url) {
-          window.location.href = data.data.url;
+        if (data.data?.checkoutUrl) {
+          window.location.href = data.data.checkoutUrl;
+        } else if (data.checkoutUrl) { // Fallback if unwrapped differently
+          // @ts-ignore
+          window.location.href = data.checkoutUrl;
         } else {
           setLoading(false);
         }

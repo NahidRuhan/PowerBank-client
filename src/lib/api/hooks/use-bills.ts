@@ -2,17 +2,19 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { billEndpoints } from '../endpoints/bills';
 import { toast } from 'sonner';
 
-export function useBills(params?: Record<string, unknown>) {
+export function useBills(params?: Record<string, unknown>, options?: { enabled?: boolean }) {
   return useQuery({
     queryKey: ['bills', params],
     queryFn: () => billEndpoints.getBills(params),
+    ...options,
   });
 }
 
-export function useMyBills(params?: Record<string, unknown>) {
+export function useMyBills(params?: Record<string, unknown>, options?: { enabled?: boolean }) {
   return useQuery({
     queryKey: ['my-bills', params],
     queryFn: () => billEndpoints.getMyBills(params),
+    ...options,
   });
 }
 
