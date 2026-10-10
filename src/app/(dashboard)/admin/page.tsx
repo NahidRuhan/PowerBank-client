@@ -21,13 +21,13 @@ export default function AdminDashboardPage() {
       <DashboardStats stats={statsResponse?.data} isLoading={isLoading} />
 
       <div className="grid gap-4 md:grid-cols-2">
-        <OutageChart />
-        <RevenueChart />
+        <OutageChart data={statsResponse?.data?.outageTrend} />
+        <RevenueChart data={statsResponse?.data?.revenueTrend} />
       </div>
 
       <div className="grid gap-4 md:grid-cols-2">
-        <TopAffectedAreas />
-        <FairnessChart />
+        <TopAffectedAreas data={statsResponse?.data?.topAffectedAreas} />
+        <FairnessChart data={statsResponse?.data?.fairnessTrend} />
       </div>
     </div>
   );
