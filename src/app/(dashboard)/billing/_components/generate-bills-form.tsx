@@ -61,7 +61,7 @@ export function GenerateBillsForm({ onSuccess }: GenerateBillsFormProps) {
               <FormControl>
                 <DatePicker
                   placeholderText="Select month"
-                  onChange={(date) => field.onChange(date ? format(date, 'yyyy-MM') : '')}
+                  onChange={(date: Date | null) => field.onChange(date ? format(date, 'yyyy-MM') : '')}
                   selected={field.value ? parse(field.value, 'yyyy-MM', new Date()) : null}
                   dateFormat="yyyy-MM"
                   showMonthYearPicker
@@ -100,7 +100,7 @@ export function GenerateBillsForm({ onSuccess }: GenerateBillsFormProps) {
               <FormControl>
                 <DatePicker
                   placeholderText="Select due date"
-                  onChange={(date) => field.onChange(date ? format(date, 'yyyy-MM-dd') : '')}
+                  onChange={(date: Date | null) => field.onChange(date ? format(date, 'yyyy-MM-dd') : '')}
                   selected={field.value ? parse(field.value, 'yyyy-MM-dd', new Date()) : null}
                   dateFormat="yyyy-MM-dd"
                   className="h-8 w-full min-w-0 rounded-lg border border-input bg-transparent px-2.5 py-1 text-base transition-colors outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 md:text-sm"

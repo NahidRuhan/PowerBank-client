@@ -68,7 +68,7 @@ export function FeedersTable() {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {feeders.map((feeder) => (
+          {feeders.map((feeder: any) => (
             <TableRow 
               key={feeder.id}
               className={cn(

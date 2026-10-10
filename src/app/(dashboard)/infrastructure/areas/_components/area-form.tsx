@@ -154,13 +154,13 @@ export function AreaFormDialog({ open, onOpenChange, area }: AreaFormDialogProps
             >
               <SelectTrigger className={errors.feederId ? 'border-danger' : ''}>
                 <SelectValue placeholder="Select a feeder">
-                  {feederId && feeders.find(f => f.id === feederId) ? (
-                    `${feeders.find(f => f.id === feederId)?.name} (${feeders.find(f => f.id === feederId)?.code})`
+                  {feederId && feeders.find((f: any) => f.id === feederId) ? (
+                    `${feeders.find((f: any) => f.id === feederId)?.name} (${feeders.find((f: any) => f.id === feederId)?.code})`
                   ) : null}
                 </SelectValue>
               </SelectTrigger>
               <SelectContent>
-                {feeders.map((fdr) => (
+                {feeders.map((fdr: any) => (
                   <SelectItem key={fdr.id} value={fdr.id}>
                     {fdr.name} ({fdr.code})
                   </SelectItem>

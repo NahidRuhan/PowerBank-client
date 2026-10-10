@@ -67,7 +67,7 @@ export function AreasTable() {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {areas.map((area) => (
+          {areas.map((area: any) => (
             <TableRow key={area.id}>
               <TableCell className="font-mono font-medium">{area.code}</TableCell>
               <TableCell>

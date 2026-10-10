@@ -133,13 +133,13 @@ export function FeederFormDialog({ open, onOpenChange, feeder }: FeederFormDialo
             >
               <SelectTrigger className={errors.substationId ? 'border-danger' : ''}>
                 <SelectValue placeholder="Select a substation">
-                  {substationId && substations.find(s => s.id === substationId) ? (
-                    `${substations.find(s => s.id === substationId)?.name} (${substations.find(s => s.id === substationId)?.code})`
+                  {substationId && substations.find((s: any) => s.id === substationId) ? (
+                    `${substations.find((s: any) => s.id === substationId)?.name} (${substations.find((s: any) => s.id === substationId)?.code})`
                   ) : null}
                 </SelectValue>
               </SelectTrigger>
               <SelectContent>
-                {substations.map((sub) => (
+                {substations.map((sub: any) => (
                   <SelectItem key={sub.id} value={sub.id}>
                     {sub.name} ({sub.code})
                   </SelectItem>

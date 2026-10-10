@@ -50,17 +50,17 @@ export function ScheduleForm({ onSuccess }: { onSuccess: () => void }) {
         <Label>Feeder <span className="text-danger">*</span></Label>
         <Select 
           value={feederId} 
-          onValueChange={(value) => setValue('feederId', value, { shouldValidate: true })}
+          onValueChange={(value) => setValue('feederId', value as string, { shouldValidate: true })}
         >
           <SelectTrigger className={errors.feederId ? 'border-danger' : ''}>
             <SelectValue placeholder="Select a feeder">
-              {feederId && feeders.find(f => f.id === feederId) ? (
-                `${feeders.find(f => f.id === feederId)?.name} (${feeders.find(f => f.id === feederId)?.code})`
+              {feederId && feeders.find((f: any) => f.id === feederId) ? (
+                `${feeders.find((f: any) => f.id === feederId)?.name} (${feeders.find((f: any) => f.id === feederId)?.code})`
               ) : null}
             </SelectValue>
           </SelectTrigger>
           <SelectContent>
-            {feeders.map((fdr) => (
+            {feeders.map((fdr: any) => (
               <SelectItem key={fdr.id} value={fdr.id}>
                 {fdr.name} ({fdr.code})
               </SelectItem>
@@ -74,7 +74,7 @@ export function ScheduleForm({ onSuccess }: { onSuccess: () => void }) {
         <Label>Quota (Optional)</Label>
         <Select 
           value={quotaId} 
-          onValueChange={(value) => setValue('quotaId', value === 'none' ? '' : value, { shouldValidate: true })}
+          onValueChange={(value) => setValue('quotaId', value === 'none' ? '' : (value as string), { shouldValidate: true })}
         >
           <SelectTrigger>
             <SelectValue placeholder="Select a quota (optional)">
@@ -102,7 +102,7 @@ export function ScheduleForm({ onSuccess }: { onSuccess: () => void }) {
           render={({ field }) => (
             <DatePicker
               placeholderText="Select start time"
-              onChange={(date) => field.onChange(date ? date.toISOString() : '')}
+              onChange={(date: Date | null) => field.onChange(date ? date.toISOString() : '')}
               selected={field.value ? new Date(field.value) : null}
               showTimeSelect
               timeFormat="HH:mm"
@@ -124,7 +124,7 @@ export function ScheduleForm({ onSuccess }: { onSuccess: () => void }) {
           render={({ field }) => (
             <DatePicker
               placeholderText="Select end time"
-              onChange={(date) => field.onChange(date ? date.toISOString() : '')}
+              onChange={(date: Date | null) => field.onChange(date ? date.toISOString() : '')}
               selected={field.value ? new Date(field.value) : null}
               showTimeSelect
               timeFormat="HH:mm"

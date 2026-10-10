@@ -86,13 +86,13 @@ export function MeterFormDialog({ open, onOpenChange }: MeterFormDialogProps) {
             >
               <SelectTrigger className={errors.areaId ? 'border-danger' : ''}>
                 <SelectValue placeholder="Select an area">
-                  {areaId && areas.find(a => a.id === areaId) ? (
-                    `${areas.find(a => a.id === areaId)?.name} (${areas.find(a => a.id === areaId)?.code})`
+                  {areaId && areas.find((a: any) => a.id === areaId) ? (
+                    `${areas.find((a: any) => a.id === areaId)?.name} (${areas.find((a: any) => a.id === areaId)?.code})`
                   ) : null}
                 </SelectValue>
               </SelectTrigger>
               <SelectContent>
-                {areas.map((area) => (
+                {areas.map((area: any) => (
                   <SelectItem key={area.id} value={area.id}>
                     {area.name} ({area.code})
                   </SelectItem>

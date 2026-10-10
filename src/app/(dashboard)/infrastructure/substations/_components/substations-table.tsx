@@ -65,7 +65,7 @@ export function SubstationsTable() {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {substations.map((substation) => (
+          {substations.map((substation: any) => (
             <TableRow key={substation.id}>
               <TableCell className="font-mono font-medium">{substation.code}</TableCell>
               <TableCell>

@@ -61,7 +61,7 @@ export function MetersTable() {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {meters.map((meter) => (
+          {meters.map((meter: any) => (
             <TableRow key={meter.id}>
               <TableCell className="font-mono font-medium">{meter.number}</TableCell>
               <TableCell className="text-ink-secondary">{meter.area?.name || meter.areaId}</TableCell>

@@ -66,7 +66,7 @@ export function ZonesTable() {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {zones.map((zone) => (
+          {zones.map((zone: any) => (
             <TableRow key={zone.id}>
               <TableCell className="font-mono font-medium">{zone.code}</TableCell>
               <TableCell>

@@ -37,7 +37,7 @@ export function QuotaForm({ onSuccess }: { onSuccess: () => void }) {
           render={({ field }) => (
             <DatePicker
               placeholderText="Select date"
-              onChange={(date) => field.onChange(date ? date.toISOString() : '')}
+              onChange={(date: Date | null) => field.onChange(date ? date.toISOString() : '')}
               selected={field.value ? new Date(field.value) : null}
               dateFormat="yyyy-MM-dd"
               className="h-8 w-full min-w-0 rounded-lg border border-input bg-transparent px-2.5 py-1 text-base transition-colors outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 md:text-sm"
@@ -61,7 +61,7 @@ export function QuotaForm({ onSuccess }: { onSuccess: () => void }) {
                 <>
                   <DatePicker
                     placeholderText="Start time"
-                    onChange={(date) => {
+                    onChange={(date: Date | null) => {
                       const newStart = date ? format(date, 'HH:mm') : '';
                       field.onChange(`${newStart}-${endStr || ''}`);
                     }}
@@ -77,7 +77,7 @@ export function QuotaForm({ onSuccess }: { onSuccess: () => void }) {
                   <span>-</span>
                   <DatePicker
                     placeholderText="End time"
-                    onChange={(date) => {
+                    onChange={(date: Date | null) => {
                       const newEnd = date ? format(date, 'HH:mm') : '';
                       field.onChange(`${startStr || ''}-${newEnd}`);
                     }}

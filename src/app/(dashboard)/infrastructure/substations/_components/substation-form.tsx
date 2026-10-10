@@ -131,13 +131,13 @@ export function SubstationFormDialog({ open, onOpenChange, substation }: Substat
             >
               <SelectTrigger className={errors.zoneId ? 'border-danger' : ''}>
                 <SelectValue placeholder="Select a zone">
-                  {zoneId && zones.find(z => z.id === zoneId) ? (
-                    `${zones.find(z => z.id === zoneId)?.name} (${zones.find(z => z.id === zoneId)?.code})`
+                  {zoneId && zones.find((z: any) => z.id === zoneId) ? (
+                    `${zones.find((z: any) => z.id === zoneId)?.name} (${zones.find((z: any) => z.id === zoneId)?.code})`
                   ) : null}
                 </SelectValue>
               </SelectTrigger>
               <SelectContent>
-                {zones.map((zone) => (
+                {zones.map((zone: any) => (
                   <SelectItem key={zone.id} value={zone.id}>
                     {zone.name} ({zone.code})
                   </SelectItem>
