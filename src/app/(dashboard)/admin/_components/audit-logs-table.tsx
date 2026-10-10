@@ -56,7 +56,7 @@ export function AuditLogsTable() {
               </TableCell>
             </TableRow>
           ) : (
-            logs.map((log) => (
+            logs.map((log: any) => (
               <React.Fragment key={log.id}>
                 <TableRow className={cn('cursor-pointer', expandedRow === log.id && 'bg-muted/50')} onClick={() => toggleRow(log.id)}>
                   <TableCell>

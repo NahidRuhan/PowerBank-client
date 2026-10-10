@@ -3,7 +3,12 @@ import type { OutageIncident } from '@/lib/types/incident';
 import type { PaginatedResponse } from '@/lib/types/api';
 
 export const createIncident = async (data: unknown): Promise<OutageIncident> => {
-  return apiClient('/incidents', { method: 'POST', data });
+  const isFormData = data instanceof FormData;
+  return apiClient('/incidents', { 
+    method: 'POST', 
+    data,
+    ...(isFormData && { headers: { 'Content-Type': 'multipart/form-data' } })
+  });
 };
 
 export const getIncidents = async (params?: any): Promise<PaginatedResponse<OutageIncident>> => {

@@ -14,6 +14,9 @@ import {
 } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 
+import { Printer } from '@phosphor-icons/react';
+import { Button } from '@/components/ui/button';
+
 interface BillDetailProps {
   bill: Bill;
   isAdmin?: boolean;
@@ -21,8 +24,8 @@ interface BillDetailProps {
 
 export function BillDetail({ bill, isAdmin }: BillDetailProps) {
   return (
-    <Card className="max-w-2xl mx-auto">
-      <CardHeader>
+    <Card className="max-w-2xl mx-auto print:shadow-none print:border-none print:max-w-none print:m-0">
+      <CardHeader className="print:px-0">
         <div className="flex justify-between items-start">
           <div>
             <CardTitle>Bill Details</CardTitle>
@@ -30,10 +33,15 @@ export function BillDetail({ bill, isAdmin }: BillDetailProps) {
               Billing cycle: {bill.month}
             </CardDescription>
           </div>
-          <StatusBadge status={bill.status} />
+          <div className="flex items-center gap-4">
+            <Button variant="outline" size="icon" className="print:hidden" onClick={() => window.print()}>
+              <Printer className="h-4 w-4" />
+            </Button>
+            <StatusBadge status={bill.status} />
+          </div>
         </div>
       </CardHeader>
-      <CardContent className="space-y-6">
+      <CardContent className="space-y-6 print:px-0">
         <div className="grid grid-cols-2 gap-4 text-sm">
           <div>
             <p className="text-muted-foreground">Bill ID</p>

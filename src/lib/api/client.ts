@@ -28,6 +28,14 @@ apiClient.interceptors.response.use(
   (response) => {
     // If backend uses the sendSuccess format
     if (response.data && response.data.success !== undefined) {
+      const payload = response.data.data;
+      if (payload && typeof payload === 'object' && 'meta' in payload && !Array.isArray(payload)) {
+        const keys = Object.keys(payload).filter(k => k !== 'meta');
+        if (keys.length === 1 && Array.isArray(payload[keys[0]])) {
+          response.data.data = payload[keys[0]];
+          response.data.meta = payload.meta;
+        }
+      }
       return response.data;
     }
     return response.data;

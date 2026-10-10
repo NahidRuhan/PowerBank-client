@@ -7,6 +7,8 @@ import { PriorityBadge } from '@/components/shared/priority-badge';
 import { Button } from '@/components/ui/button';
 import { IncidentTimeline } from '../_components/incident-timeline';
 import { format } from 'date-fns';
+import { toast } from 'sonner';
+import Image from 'next/image';
 
 export default function IncidentDetailPage() {
   const params = useParams();
@@ -19,7 +21,14 @@ export default function IncidentDetailPage() {
   if (!incident) return <div>Not found</div>;
 
   const handleStatus = (status: string) => {
-    updateIncident.mutate({ id, data: { status } });
+    toast.promise(
+      updateIncident.mutateAsync({ id, data: { status } }),
+      {
+        loading: 'Updating status...',
+        success: `Incident status updated to ${status}`,
+        error: (err) => `Failed to update status: ${(err as Error).message}`,
+      }
+    );
   };
 
   return (
@@ -51,6 +60,18 @@ export default function IncidentDetailPage() {
           <p className="text-sm text-ink-secondary">Description</p>
           <p className="mt-1">{incident.description}</p>
         </div>
+        {incident.photoUrl && (
+          <div className="border p-4 rounded-lg col-span-2">
+            <p className="text-sm text-ink-secondary mb-2">Attached Photo</p>
+            <Image 
+              src={incident.photoUrl} 
+              alt="Incident attachment" 
+              width={600}
+              height={400}
+              className="w-full max-w-md rounded-lg object-cover border border-border"
+            />
+          </div>
+        )}
       </div>
       
       <div className="mt-8">

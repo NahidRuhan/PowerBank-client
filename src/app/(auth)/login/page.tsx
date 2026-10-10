@@ -143,6 +143,48 @@ function LoginForm() {
         Sign in with Google
       </Button>
 
+      <div className="relative my-2 mt-4">
+        <div className="absolute inset-0 flex items-center">
+          <span className="w-full border-t border-border" />
+        </div>
+        <div className="relative flex justify-center text-xs uppercase">
+          <span className="bg-canvas px-2 text-ink-secondary">Demo Accounts</span>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-3 gap-2">
+        <Button
+          variant="outline"
+          size="sm"
+          type="button"
+          disabled={isSubmitting || loginMutation.isPending}
+          onClick={() => onSubmit({ email: 'admin@powerbank.com', password: 'password123' })}
+          className="text-xs h-8"
+        >
+          Admin
+        </Button>
+        <Button
+          variant="outline"
+          size="sm"
+          type="button"
+          disabled={isSubmitting || loginMutation.isPending}
+          onClick={() => onSubmit({ email: 'operator1@powerbank.com', password: 'password123' })}
+          className="text-xs h-8"
+        >
+          Operator
+        </Button>
+        <Button
+          variant="outline"
+          size="sm"
+          type="button"
+          disabled={isSubmitting || loginMutation.isPending}
+          onClick={() => onSubmit({ email: 'customer1@powerbank.com', password: 'password123' })}
+          className="text-xs h-8"
+        >
+          Customer
+        </Button>
+      </div>
+
       <p className="text-center text-sm text-ink-secondary mt-4">
         Don&apos;t have an account?{' '}
         <Link href="/register" className="font-medium text-accent hover:text-accent-hover transition-colors">

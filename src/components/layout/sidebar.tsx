@@ -24,8 +24,8 @@ export function Sidebar() {
 
   const navigation = [
     { name: 'Dashboard', href: '/dashboard', icon: SquaresFour, roles: ['CUSTOMER', 'OPERATOR', 'ADMIN'] },
-    { name: 'Infrastructure', href: '/infrastructure', icon: MapPin, roles: ['CUSTOMER', 'OPERATOR', 'ADMIN'] },
-    { name: 'Schedules', href: '/schedules', icon: Calendar, roles: ['CUSTOMER', 'OPERATOR', 'ADMIN'] },
+    { name: 'Infrastructure', href: '/infrastructure', icon: MapPin, roles: ['OPERATOR', 'ADMIN'] },
+    { name: 'Schedules', href: '/schedules', icon: Calendar, roles: ['OPERATOR', 'ADMIN'] },
     { name: 'Incidents', href: '/incidents', icon: Warning, roles: ['CUSTOMER', 'OPERATOR', 'ADMIN'] },
     { name: 'Billing', href: '/billing', icon: Receipt, roles: ['CUSTOMER', 'ADMIN'] },
     { name: 'Admin', href: '/admin', icon: ShieldCheck, roles: ['ADMIN'] },

@@ -21,7 +21,7 @@ export const useCreateIncident = () => {
   return useMutation({
     mutationFn: incidentsApi.createIncident,
     onSuccess: async () => {
-      await queryClient.invalidateQueries({ queryKey: ['incidents'] });
+      await queryClient.refetchQueries({ queryKey: ['incidents'] });
     },
   });
 };
