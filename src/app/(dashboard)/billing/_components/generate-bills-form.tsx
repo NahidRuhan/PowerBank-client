@@ -14,6 +14,9 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+import { format, parse } from 'date-fns';
 
 interface GenerateBillsFormProps {
   onSuccess?: () => void;
@@ -54,9 +57,17 @@ export function GenerateBillsForm({ onSuccess }: GenerateBillsFormProps) {
           name="month"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Month (YYYY-MM)</FormLabel>
+              <FormLabel>Month</FormLabel>
               <FormControl>
-                <Input placeholder="2023-10" {...field} />
+                <DatePicker
+                  placeholderText="Select month"
+                  onChange={(date) => field.onChange(date ? format(date, 'yyyy-MM') : '')}
+                  selected={field.value ? parse(field.value, 'yyyy-MM', new Date()) : null}
+                  dateFormat="yyyy-MM"
+                  showMonthYearPicker
+                  className="h-8 w-full min-w-0 rounded-lg border border-input bg-transparent px-2.5 py-1 text-base transition-colors outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 md:text-sm"
+                  wrapperClassName="w-full flex"
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -87,7 +98,14 @@ export function GenerateBillsForm({ onSuccess }: GenerateBillsFormProps) {
             <FormItem>
               <FormLabel>Due Date</FormLabel>
               <FormControl>
-                <Input type="date" {...field} />
+                <DatePicker
+                  placeholderText="Select due date"
+                  onChange={(date) => field.onChange(date ? format(date, 'yyyy-MM-dd') : '')}
+                  selected={field.value ? parse(field.value, 'yyyy-MM-dd', new Date()) : null}
+                  dateFormat="yyyy-MM-dd"
+                  className="h-8 w-full min-w-0 rounded-lg border border-input bg-transparent px-2.5 py-1 text-base transition-colors outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 md:text-sm"
+                  wrapperClassName="w-full flex"
+                />
               </FormControl>
               <FormMessage />
             </FormItem>

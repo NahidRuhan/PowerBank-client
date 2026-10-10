@@ -17,6 +17,7 @@ import { RoleChangeDialog } from './role-change-dialog';
 // Assuming useAuthStore gives us current user to prevent self-deletion
 import { useAuthStore } from '@/stores/auth-store';
 import { DataTablePagination } from '@/components/shared/data-table-pagination';
+import { ConfirmDialog } from '@/components/shared/confirm-dialog';
 
 export function UsersTable() {
   const [page, setPage] = useState(1);
@@ -24,6 +25,7 @@ export function UsersTable() {
   const { mutate: deleteUser } = useDeleteUser();
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [isRoleDialogOpen, setIsRoleDialogOpen] = useState(false);
+  const [itemToDelete, setItemToDelete] = useState<string | null>(null);
   const currentUser = useAuthStore(state => state.user);
 
   if (isLoading) {
@@ -46,9 +48,7 @@ export function UsersTable() {
   };
 
   const handleDelete = (id: string) => {
-    if (confirm('Are you sure you want to delete this user?')) {
-      deleteUser(id);
-    }
+    setItemToDelete(id);
   };
 
   return (
@@ -127,6 +127,19 @@ export function UsersTable() {
         user={selectedUser} 
         open={isRoleDialogOpen} 
         onOpenChange={setIsRoleDialogOpen} 
+      />
+
+      <ConfirmDialog
+        open={!!itemToDelete}
+        onOpenChange={(open) => !open && setItemToDelete(null)}
+        title="Delete User"
+        description="Are you sure you want to delete this user? This action cannot be undone."
+        onConfirm={() => {
+          if (itemToDelete) {
+            deleteUser(itemToDelete);
+          }
+        }}
+        confirmText="Delete"
       />
     </>
   );

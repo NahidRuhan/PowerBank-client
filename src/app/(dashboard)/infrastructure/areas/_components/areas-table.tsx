@@ -18,6 +18,7 @@ import { useState } from 'react';
 import { AreaFormDialog } from './area-form';
 import { PriorityBadge } from '@/components/shared/priority-badge';
 import { DataTablePagination } from '@/components/shared/data-table-pagination';
+import { ConfirmDialog } from '@/components/shared/confirm-dialog';
 
 export function AreasTable() {
   const [page, setPage] = useState(1);
@@ -25,6 +26,7 @@ export function AreasTable() {
   const deleteMutation = useDeleteArea();
   
   const [editingArea, setEditingArea] = useState<Area | null>(null);
+  const [itemToDelete, setItemToDelete] = useState<string | null>(null);
 
   if (isLoading) {
     return (
@@ -90,11 +92,7 @@ export function AreasTable() {
                   variant="ghost" 
                   size="icon" 
                   className="text-danger hover:text-danger hover:bg-danger-muted/20"
-                  onClick={() => {
-                    if (confirm('Are you sure you want to delete this area?')) {
-                      deleteMutation.mutate(area.id);
-                    }
-                  }}
+                  onClick={() => setItemToDelete(area.id)}
                 >
                   <Trash size={18} />
                 </Button>
@@ -119,6 +117,18 @@ export function AreasTable() {
           area={editingArea}
         />
       )}
+      <ConfirmDialog
+        open={!!itemToDelete}
+        onOpenChange={(open) => !open && setItemToDelete(null)}
+        title="Delete Area"
+        description="Are you sure you want to delete this area? This action cannot be undone."
+        onConfirm={() => {
+          if (itemToDelete) {
+            deleteMutation.mutate(itemToDelete);
+          }
+        }}
+        confirmText="Delete"
+      />
     </>
   );
 }

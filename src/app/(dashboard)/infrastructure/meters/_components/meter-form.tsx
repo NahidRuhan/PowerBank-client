@@ -81,11 +81,15 @@ export function MeterFormDialog({ open, onOpenChange }: MeterFormDialogProps) {
           <div className="space-y-1.5">
             <Label>Area <span className="text-danger">*</span></Label>
             <Select 
-              value={areaId || undefined} 
+              value={areaId} 
               onValueChange={(value) => setValue('areaId', value as string, { shouldValidate: true })}
             >
               <SelectTrigger className={errors.areaId ? 'border-danger' : ''}>
-                <SelectValue placeholder="Select an area" />
+                <SelectValue placeholder="Select an area">
+                  {areaId && areas.find(a => a.id === areaId) ? (
+                    `${areas.find(a => a.id === areaId)?.name} (${areas.find(a => a.id === areaId)?.code})`
+                  ) : null}
+                </SelectValue>
               </SelectTrigger>
               <SelectContent>
                 {areas.map((area) => (

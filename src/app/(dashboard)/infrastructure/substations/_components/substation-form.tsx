@@ -126,11 +126,15 @@ export function SubstationFormDialog({ open, onOpenChange, substation }: Substat
           <div className="space-y-1.5">
             <Label>Zone <span className="text-danger">*</span></Label>
             <Select 
-              value={zoneId || undefined} 
+              value={zoneId} 
               onValueChange={(value) => setValue('zoneId', value as string, { shouldValidate: true })}
             >
               <SelectTrigger className={errors.zoneId ? 'border-danger' : ''}>
-                <SelectValue placeholder="Select a zone" />
+                <SelectValue placeholder="Select a zone">
+                  {zoneId && zones.find(z => z.id === zoneId) ? (
+                    `${zones.find(z => z.id === zoneId)?.name} (${zones.find(z => z.id === zoneId)?.code})`
+                  ) : null}
+                </SelectValue>
               </SelectTrigger>
               <SelectContent>
                 {zones.map((zone) => (

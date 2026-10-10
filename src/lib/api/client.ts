@@ -79,6 +79,13 @@ apiClient.interceptors.response.use(
     const payload = error.response?.data as { message?: string; [key: string]: unknown } | undefined;
     const message = payload?.message || error.message || 'An unexpected error occurred';
     
+    // Global error toast (skip for GET requests to avoid query retry spam)
+    if (error.config?.method?.toLowerCase() !== 'get') {
+      import('sonner').then(({ toast }) => {
+        toast.error(message);
+      });
+    }
+
     throw new ApiError(message, error.response?.status || 500, payload);
   }
 );

@@ -18,6 +18,7 @@ import { Zone } from '@/lib/types/infrastructure';
 import { useState } from 'react';
 import { ZoneFormDialog } from './zone-form';
 import { DataTablePagination } from '@/components/shared/data-table-pagination';
+import { ConfirmDialog } from '@/components/shared/confirm-dialog';
 
 export function ZonesTable() {
   const [page, setPage] = useState(1);
@@ -25,6 +26,7 @@ export function ZonesTable() {
   const deleteMutation = useDeleteZone();
   
   const [editingZone, setEditingZone] = useState<Zone | null>(null);
+  const [itemToDelete, setItemToDelete] = useState<string | null>(null);
 
   if (isLoading) {
     return (
@@ -90,11 +92,7 @@ export function ZonesTable() {
                   variant="ghost" 
                   size="icon" 
                   className="text-danger hover:text-danger hover:bg-danger-muted/20"
-                  onClick={() => {
-                    if (confirm('Are you sure you want to delete this zone?')) {
-                      deleteMutation.mutate(zone.id);
-                    }
-                  }}
+                  onClick={() => setItemToDelete(zone.id)}
                 >
                   <Trash size={18} />
                 </Button>
@@ -119,6 +117,18 @@ export function ZonesTable() {
           zone={editingZone}
         />
       )}
+      <ConfirmDialog
+        open={!!itemToDelete}
+        onOpenChange={(open) => !open && setItemToDelete(null)}
+        title="Delete Zone"
+        description="Are you sure you want to delete this zone? This action cannot be undone."
+        onConfirm={() => {
+          if (itemToDelete) {
+            deleteMutation.mutate(itemToDelete);
+          }
+        }}
+        confirmText="Delete"
+      />
     </>
   );
 }

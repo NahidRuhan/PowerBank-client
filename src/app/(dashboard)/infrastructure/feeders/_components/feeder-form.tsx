@@ -128,11 +128,15 @@ export function FeederFormDialog({ open, onOpenChange, feeder }: FeederFormDialo
           <div className="space-y-1.5">
             <Label>Substation <span className="text-danger">*</span></Label>
             <Select 
-              value={substationId || undefined} 
+              value={substationId} 
               onValueChange={(value) => setValue('substationId', value as string, { shouldValidate: true })}
             >
               <SelectTrigger className={errors.substationId ? 'border-danger' : ''}>
-                <SelectValue placeholder="Select a substation" />
+                <SelectValue placeholder="Select a substation">
+                  {substationId && substations.find(s => s.id === substationId) ? (
+                    `${substations.find(s => s.id === substationId)?.name} (${substations.find(s => s.id === substationId)?.code})`
+                  ) : null}
+                </SelectValue>
               </SelectTrigger>
               <SelectContent>
                 {substations.map((sub) => (

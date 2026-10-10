@@ -15,11 +15,13 @@ import { Trash, Gauge } from '@phosphor-icons/react';
 import { useState } from 'react';
 import { format } from 'date-fns';
 import { DataTablePagination } from '@/components/shared/data-table-pagination';
+import { ConfirmDialog } from '@/components/shared/confirm-dialog';
 
 export function MetersTable() {
   const [page, setPage] = useState(1);
   const { data, isLoading } = useMeters({ page, limit: 10 });
   const deleteMutation = useDeleteMeter();
+  const [itemToDelete, setItemToDelete] = useState<string | null>(null);
   
   if (isLoading) {
     return (
@@ -74,11 +76,7 @@ export function MetersTable() {
                   variant="ghost" 
                   size="icon" 
                   className="text-danger hover:text-danger hover:bg-danger-muted/20"
-                  onClick={() => {
-                    if (confirm('Are you sure you want to delete this meter?')) {
-                      deleteMutation.mutate(meter.id);
-                    }
-                  }}
+                  onClick={() => setItemToDelete(meter.id)}
                 >
                   <Trash size={18} />
                 </Button>
@@ -95,6 +93,18 @@ export function MetersTable() {
           onPageChange={setPage}
         />
       )}
+      <ConfirmDialog
+        open={!!itemToDelete}
+        onOpenChange={(open) => !open && setItemToDelete(null)}
+        title="Delete Meter"
+        description="Are you sure you want to delete this meter? This action cannot be undone."
+        onConfirm={() => {
+          if (itemToDelete) {
+            deleteMutation.mutate(itemToDelete);
+          }
+        }}
+        confirmText="Delete"
+      />
     </>
   );
 }

@@ -117,7 +117,7 @@ export function AreaFormDialog({ open, onOpenChange, area }: AreaFormDialogProps
             <div className="space-y-1.5">
               <Label>Priority <span className="text-danger">*</span></Label>
               <Select 
-                value={priority || undefined} 
+                value={priority} 
                 onValueChange={(value: any) => setValue('priority', value, { shouldValidate: true })}
               >
                 <SelectTrigger className={errors.priority ? 'border-danger' : ''}>
@@ -149,11 +149,15 @@ export function AreaFormDialog({ open, onOpenChange, area }: AreaFormDialogProps
           <div className="space-y-1.5">
             <Label>Feeder <span className="text-danger">*</span></Label>
             <Select 
-              value={feederId || undefined} 
+              value={feederId} 
               onValueChange={(value) => setValue('feederId', value as string, { shouldValidate: true })}
             >
               <SelectTrigger className={errors.feederId ? 'border-danger' : ''}>
-                <SelectValue placeholder="Select a feeder" />
+                <SelectValue placeholder="Select a feeder">
+                  {feederId && feeders.find(f => f.id === feederId) ? (
+                    `${feeders.find(f => f.id === feederId)?.name} (${feeders.find(f => f.id === feederId)?.code})`
+                  ) : null}
+                </SelectValue>
               </SelectTrigger>
               <SelectContent>
                 {feeders.map((fdr) => (

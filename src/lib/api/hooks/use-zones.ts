@@ -42,7 +42,27 @@ export const useDeleteZone = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: deleteZone,
-    onSuccess: () => {
+    onMutate: async (deletedId) => {
+      await queryClient.cancelQueries({ queryKey: ['zones'] });
+      const previous = queryClient.getQueriesData({ queryKey: ['zones'] });
+      queryClient.setQueriesData({ queryKey: ['zones'] }, (old: any) => {
+        if (!old) return old;
+        if (old.data && Array.isArray(old.data)) {
+          return { ...old, data: old.data.filter((i: any) => i.id !== deletedId) };
+        }
+        if (Array.isArray(old)) return old.filter((i: any) => i.id !== deletedId);
+        return old;
+      });
+      return { previous };
+    },
+    onError: (err, deletedId, context) => {
+      if (context?.previous) {
+        context.previous.forEach(([queryKey, data]) => {
+          queryClient.setQueryData(queryKey, data);
+        });
+      }
+    },
+    onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ['zones'] });
     },
   });

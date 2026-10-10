@@ -19,6 +19,7 @@ import { FeederFormDialog } from './feeder-form';
 import { FeederStatusToggle } from './feeder-status-toggle';
 import { cn } from '@/lib/utils';
 import { DataTablePagination } from '@/components/shared/data-table-pagination';
+import { ConfirmDialog } from '@/components/shared/confirm-dialog';
 
 export function FeedersTable() {
   const [page, setPage] = useState(1);
@@ -26,6 +27,7 @@ export function FeedersTable() {
   const deleteMutation = useDeleteFeeder();
   
   const [editingFeeder, setEditingFeeder] = useState<Feeder | null>(null);
+  const [itemToDelete, setItemToDelete] = useState<string | null>(null);
 
   if (isLoading) {
     return (
@@ -57,7 +59,6 @@ export function FeedersTable() {
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead>ID</TableHead>
             <TableHead>Code</TableHead>
             <TableHead>Name</TableHead>
             <TableHead>Load (MW)</TableHead>
@@ -75,7 +76,6 @@ export function FeedersTable() {
                 feeder.status === 'LOAD_SHED' && 'bg-warning-muted/20 hover:bg-warning-muted/30'
               )}
             >
-              <TableCell className="font-mono text-xs">{feeder.id}</TableCell>
               <TableCell className="font-mono font-medium">{feeder.code}</TableCell>
               <TableCell>
                 <Link href={`/infrastructure/feeders/${feeder.id}`} className="hover:underline text-accent">
@@ -99,11 +99,7 @@ export function FeedersTable() {
                   variant="ghost" 
                   size="icon" 
                   className="text-danger hover:text-danger hover:bg-danger-muted/20"
-                  onClick={() => {
-                    if (confirm('Are you sure you want to delete this feeder?')) {
-                      deleteMutation.mutate(feeder.id);
-                    }
-                  }}
+                  onClick={() => setItemToDelete(feeder.id)}
                 >
                   <Trash size={18} />
                 </Button>
@@ -128,6 +124,18 @@ export function FeedersTable() {
           feeder={editingFeeder}
         />
       )}
+      <ConfirmDialog
+        open={!!itemToDelete}
+        onOpenChange={(open) => !open && setItemToDelete(null)}
+        title="Delete Feeder"
+        description="Are you sure you want to delete this feeder? This action cannot be undone."
+        onConfirm={() => {
+          if (itemToDelete) {
+            deleteMutation.mutate(itemToDelete);
+          }
+        }}
+        confirmText="Delete"
+      />
     </>
   );
 }

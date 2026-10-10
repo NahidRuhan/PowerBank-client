@@ -16,14 +16,6 @@ const nextConfig: NextConfig = {
   experimental: {
     optimizePackageImports: ['@phosphor-icons/react'],
   },
-  // @ts-ignore
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
-  // @ts-ignore
-  typescript: {
-    ignoreBuildErrors: true,
-  },
 };
 
 export default nextConfig;

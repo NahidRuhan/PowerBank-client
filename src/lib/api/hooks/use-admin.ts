@@ -30,7 +30,7 @@ export function useUpdateUserRole() {
       toast.success('User role updated successfully');
     },
     onError: (error: Error & { payload?: { message?: string } }) => {
-      toast.error(error?.payload?.message || error.message || 'Failed to update user role');
+      // toast is now handled globally in client.ts
     },
   });
 }
@@ -40,12 +40,38 @@ export function useDeleteUser() {
 
   return useMutation({
     mutationFn: adminEndpoints.deleteUser,
+    onMutate: async (deletedId) => {
+      await queryClient.cancelQueries({ queryKey: ['admin', 'users'] });
+      const previous = queryClient.getQueriesData({ queryKey: ['admin', 'users'] });
+      queryClient.setQueriesData({ queryKey: ['admin', 'users'] }, (old: any) => {
+        if (!old) return old;
+        // Handle standard pagination response
+        if (old.data && Array.isArray(old.data)) {
+          return { ...old, data: old.data.filter((i: any) => i.id !== deletedId) };
+        }
+        // Handle { data: { users: [] } } nested format
+        if (old.data?.users && Array.isArray(old.data.users)) {
+          return { ...old, data: { ...old.data, users: old.data.users.filter((i: any) => i.id !== deletedId) } };
+        }
+        // Handle flat array
+        if (Array.isArray(old)) return old.filter((i: any) => i.id !== deletedId);
+        return old;
+      });
+      return { previous };
+    },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['admin', 'users'] });
       toast.success('User deleted successfully');
     },
-    onError: (error: Error & { payload?: { message?: string } }) => {
-      toast.error(error?.payload?.message || error.message || 'Failed to delete user');
+    onError: (error: Error & { payload?: { message?: string } }, deletedId, context) => {
+      if (context?.previous) {
+        context.previous.forEach(([queryKey, data]) => {
+          queryClient.setQueryData(queryKey, data);
+        });
+      }
+      // toast is now handled globally in client.ts
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ['admin', 'users'] });
     },
   });
 }

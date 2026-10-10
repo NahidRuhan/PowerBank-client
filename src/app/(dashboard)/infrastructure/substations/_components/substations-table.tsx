@@ -17,6 +17,7 @@ import { Substation } from '@/lib/types/infrastructure';
 import { useState } from 'react';
 import { SubstationFormDialog } from './substation-form';
 import { DataTablePagination } from '@/components/shared/data-table-pagination';
+import { ConfirmDialog } from '@/components/shared/confirm-dialog';
 
 export function SubstationsTable() {
   const [page, setPage] = useState(1);
@@ -24,6 +25,7 @@ export function SubstationsTable() {
   const deleteMutation = useDeleteSubstation();
   
   const [editingSubstation, setEditingSubstation] = useState<Substation | null>(null);
+  const [itemToDelete, setItemToDelete] = useState<string | null>(null);
 
   if (isLoading) {
     return (
@@ -85,11 +87,7 @@ export function SubstationsTable() {
                   variant="ghost" 
                   size="icon" 
                   className="text-danger hover:text-danger hover:bg-danger-muted/20"
-                  onClick={() => {
-                    if (confirm('Are you sure you want to delete this substation?')) {
-                      deleteMutation.mutate(substation.id);
-                    }
-                  }}
+                  onClick={() => setItemToDelete(substation.id)}
                 >
                   <Trash size={18} />
                 </Button>
@@ -114,6 +112,18 @@ export function SubstationsTable() {
           substation={editingSubstation}
         />
       )}
+      <ConfirmDialog
+        open={!!itemToDelete}
+        onOpenChange={(open) => !open && setItemToDelete(null)}
+        title="Delete Substation"
+        description="Are you sure you want to delete this substation? This action cannot be undone."
+        onConfirm={() => {
+          if (itemToDelete) {
+            deleteMutation.mutate(itemToDelete);
+          }
+        }}
+        confirmText="Delete"
+      />
     </>
   );
 }

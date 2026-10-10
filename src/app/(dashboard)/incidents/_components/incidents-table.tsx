@@ -73,7 +73,7 @@ export function IncidentsTable() {
               items.map((incident: import('@/lib/types/incident').OutageIncident) => (
                 <TableRow key={incident.id}>
                   <TableCell className="font-mono">{incident.id.slice(0, 8)}</TableCell>
-                  <TableCell className="font-mono">{incident.feederId}</TableCell>
+                  <TableCell>{(incident as any).feeder?.name || incident.feederId}</TableCell>
                   <TableCell><PriorityBadge priority={(incident.priority as any) || 'MEDIUM'} /></TableCell>
                   <TableCell><StatusBadge status={incident.status} /></TableCell>
                   <TableCell>{incident.estimatedRestoration ? format(new Date(incident.estimatedRestoration), 'MMM d, HH:mm') : 'Not set'}</TableCell>
